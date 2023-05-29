@@ -57,6 +57,8 @@ bool runOnBasicBlock(BasicBlock &B) {
     // Si possono aggiornare le singole references separatamente?
     // Controlla la documentazione e prova a rispondere.
     Inst1st.replaceAllUsesWith(NewInst);
+
+    //CONSEGNA: La seguente porzione di codice deve verificare le mul che incontra si possono sostituire con delle shift e, nel caso fosse possibile, deve farlo
     
 	int index=-1;
 	int pos_shift;
@@ -69,7 +71,7 @@ bool runOnBasicBlock(BasicBlock &B) {
 				index=-1;
 				ConstantInt *CI1 = dyn_cast<ConstantInt>(BO->getOperand(0));
 				ConstantInt *CI2 = dyn_cast<ConstantInt>(BO->getOperand(1));
-				if((CI1 && isPowerOfTwo(CI1)) || (CI2 && isPowerOfTwo(CI2))) {
+				if((CI1 && isPowerOfTwo(CI1)) || (CI2 && isPowerOfTwo(CI2))) { //verifico se uno dei due operando e' sia una costante sia una potenza di 2
 					if (CI1 && isPowerOfTwo(CI1)){
 						index=1;
 						pos_shift=CI1->getValue().logBase2();
@@ -84,7 +86,7 @@ bool runOnBasicBlock(BasicBlock &B) {
 					outs() << "Dopo aver controlalto entrambi gli IF!\n";
 					if (index != -1){
 						//Type* i32Ty = Type::getInt32Ty(context);
-						Value* ShiftAmountValue = ConstantInt::get(Type::getInt32Ty(B.getContext()), pos_shift);
+						Value* ShiftAmountValue = ConstantInt::get(Type::getInt32Ty(B.getContext()), pos_shift); //calcolo il valore della shift
 						BinaryOperator *NewInst = BinaryOperator::CreateShl(BO->getOperand(index),ShiftAmountValue,"",BO);
 						shiftToAdd.push_back(NewInst);
 						mulToRemove.push_back(BO);

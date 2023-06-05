@@ -1,0 +1,50 @@
+
+;; Function ex2 (ex2, funcdef_no=0, decl_uid=4313, cgraph_uid=1, symbol_order=0)
+
+Introduced new external node (ex2._omp_fn.0/2).
+ex2 ()
+{
+  int id;
+  int base;
+  int slaves;
+
+  base = 5;
+  slaves = 0;
+  {
+    .omp_data_o.1.base = base;
+    .omp_data_o.1.slaves = slaves;
+    #pragma omp parallel private(id) firstprivate(base) shared(slaves) [child fn: ex2._omp_fn.0 (.omp_data_o.1)]
+      {
+        .omp_data_i = (struct .omp_data_s.0 & restrict) &.omp_data_o.1;
+        base = .omp_data_i->base;
+        id = omp_get_thread_num ();
+        D.4321 = omp_get_num_threads ();
+        D.4339 = D.4321 + -1;
+        .omp_data_i->slaves = D.4339;
+        if (id == 0) goto <D.4336>; else goto <D.4337>;
+        <D.4336>:
+        D.4340 = .omp_data_i->slaves;
+        D.4324 = base * D.4340;
+        printf ("Master: base = %d.\n", D.4324);
+        goto <D.4338>;
+        <D.4337>:
+        D.4326 = base * id;
+        printf ("Slave: base = %d.\n", D.4326);
+        <D.4338>:
+        #pragma omp return
+      }
+    slaves = .omp_data_o.1.slaves;
+    .omp_data_o.1 = {CLOBBER};
+  }
+}
+
+
+
+;; Function main (main, funcdef_no=1, decl_uid=4318, cgraph_uid=2, symbol_order=1)
+
+main ()
+{
+  ex2 ();
+}
+
+

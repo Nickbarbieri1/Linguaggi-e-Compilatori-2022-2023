@@ -1,0 +1,52 @@
+
+;; Function main (main, funcdef_no=0, decl_uid=4730, cgraph_uid=1, symbol_order=0)
+
+main ()
+{
+  int i;
+  int j;
+  int var;
+  const int NITER;
+  const int N;
+  int D.4745;
+
+  <bb 2> :
+  N = 4;
+  NITER = 1000;
+  var = 0;
+  j = 0;
+
+  <bb 3> :
+  if (j > 3)
+    goto <bb 8>; [INV]
+  else
+    goto <bb 4>; [INV]
+
+  <bb 4> :
+  i = 0;
+
+  <bb 5> :
+  if (i > 999)
+    goto <bb 7>; [INV]
+  else
+    goto <bb 6>; [INV]
+
+  <bb 6> :
+  var = var + 1;
+  i = i + 1;
+  goto <bb 5>; [INV]
+
+  <bb 7> :
+  j = j + 1;
+  goto <bb 3>; [INV]
+
+  <bb 8> :
+  D.4745 = 0;
+
+  <bb 9> :
+<L6>:
+  return D.4745;
+
+}
+
+
